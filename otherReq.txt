@@ -1,0 +1,5 @@
+conda install -c conda-forge ffmpeg libsndfile
+
+For Mac
+brew install ffmpeg
+brew install libsndfile

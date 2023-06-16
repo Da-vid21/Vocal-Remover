@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Music Uploader</title>
+    <script src="https://unpkg.com/wavesurfer.js@6.6"></script>
+</head>
+<body>
+    
+    <div id="waveform"></div>
+    <input type="range" id="instrumental-volume-slider" value="100">
+    <div id="waveform1"></div>
+    <button id="play-button">Play</button>
+    <button id="pause-button">Pause</button>
+    <input type="range" id="vocals-volume-slider" value="0">
+    <input type="range" id="time-slider" min="0" max="100" step="1">
+    <script src="../static/preview.js" instrumental-link="{{ instrumental_path }}" vocal-link="{{ vocals_path }}"></script>
+</body>
+</html>

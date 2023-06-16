@@ -1,0 +1,72 @@
+
+
+#video-container{
+  margin: auto;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: max-content;
+  padding-top: 20px;
+  /* Usual is 30% */
+  /* width: 35%; */
+  /* padding-top: 20px; */
+}
+#video-player{
+    height: 50vh;
+    
+}
+#waveforms{
+  margin: auto;
+  width: 70%;
+  padding: 10px;
+  
+}
+.slider-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .slider-time {
+    width: 50px;
+    text-align: center;
+  }
+  
+  #start-time {
+    margin-right: 10px;
+    margin-left: 15px;
+  }
+  
+  #end-time {
+    margin-left: 10px;
+    
+  }
+  
+  #time-slider {
+    flex-grow: 1;
+    margin: 0 10px;
+  }
+
+  
+  .slider-container button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .slider-container i {
+    font-size: 24px;
+  }
+  
+
+  
+  #pauseIcon {
+    display: none;
+  }
+  
+  #time-slider {
+    flex-grow: 1;
+    margin: 0 10px;
+  }
+  

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Vocal Remover{% endblock %}
+
+{% block content %}
+    <h1>Please Upload your Music</h1>
+    <form action="/YTLink" method="POST" enctype="multipart/form-data">
+        <input type="text" name="youtube-link">
+        <input type="submit" value="Upload">
+    </form>
+{% endblock %}
