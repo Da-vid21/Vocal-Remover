@@ -39,7 +39,9 @@ def upload_file():
 # This one is to process youtube Links
 @app.route('/YTLink', methods=['POST'])
 def processYT():
-    link = request.form['youtube-link']
+    # print(request.form.get('youtube-link'))
+    link = request.form.get('youtube-link')
+
     links = main.main(link)
     video_link = links[0]
     instrumental_path = links[1]

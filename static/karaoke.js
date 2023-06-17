@@ -26,16 +26,16 @@ videoPlayer.addEventListener('loadedmetadata', function() {
 
 const instrumentalAudio = WaveSurfer.create({
     container: "#waveform",
-    waveColor: "violet",
-    progressColor: "purple",
-    interact : true
+    waveColor: "#b828b8",
+    progressColor: "#7500d5",
+    interact : false
 });
 
 const vocalsAudio = WaveSurfer.create({
     container: "#waveform1",
-    waveColor: "violet",
-    progressColor: "purple",
-    interact : true
+    waveColor: "#b312b3",
+    progressColor: "#7500d5",
+    interact : false
 });
 
 

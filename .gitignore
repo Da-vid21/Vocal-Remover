@@ -1,2 +1,6 @@
 venv/
 .vscode/
+uploads/*
+splitted/*
+src/__pycache__/
+static/__pycache__/

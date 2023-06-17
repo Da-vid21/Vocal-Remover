@@ -3,9 +3,26 @@
 {% block title %}Vocal Remover{% endblock %}
 
 {% block content %}
-    <h1>Please Upload your Music</h1>
-    <form action="/YTLink" method="POST" enctype="multipart/form-data">
-        <input type="text" name="youtube-link">
-        <input type="submit" value="Upload">
-    </form>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/index.css"> 
+    
+    <div id="container">
+        <h1 class="logo">Please Upload Your Youtube Link</h1>
+        <form action="/YTLink" method="POST" enctype="multipart/form-data">
+            <div id="form-box">
+                <button id="next-btn" type="submit" class="fas fa-arrow-right" style="border: transparent; background: transparent;"></button>
+
+                <div id="input-group">
+                    <input id="input-field" name="youtube-link" type="text" required>
+                    <label id="input-label"></label>
+                    <div id="input-progress"></div>
+                </div>
+            </div>
+            
+        </form>
+        <div id="progress-bar"></div>
+    </div>
+
+    <script src="../static/index.js"></script>
 {% endblock %}
