@@ -21,8 +21,6 @@ videoPlayer.addEventListener('loadedmetadata', function() {
     maxDuration = videoPlayer.duration;
     timeSlider.max = maxDuration;
 });
- 
- 
 
 const instrumentalAudio = WaveSurfer.create({
     container: "#waveform",
@@ -42,12 +40,6 @@ const vocalsAudio = WaveSurfer.create({
 instrumentalAudio.load(instrumentLink);
 vocalsAudio.load(vocalsLink);
 
-
-// Rest of your code...
-
-
-
-
 const playButton = document.getElementById('play-button');
 const pauseButton = document.getElementById('pause-button');
 const instrumentVolumeSlider = document.getElementById('instrumental-volume-slider');
@@ -56,10 +48,7 @@ const timeSlider = document.getElementById('time-slider');
 const fileInput = document.getElementById('file-input');
 const startTimeElement = document.getElementById('start-time');
 const endTimeElement = document.getElementById('end-time');
-
-
 const playPauseButton = document.getElementById('play-pause-button');
-
 
 function togglePlayPause() {
   if (isPlaying) {
@@ -133,10 +122,7 @@ document.body.onkeyup = function(e) {
         isPlaying = true;
       }
     }
-}
-
-
-        
+} 
 
 instrumentalAudio.on('ready', function() {
     
@@ -172,14 +158,12 @@ vocalsAudio.on('audioprocess', function() {
 
 // Add event listener for 'play' event of the video player
 videoPlayer.addEventListener('play', function() {
-    instrumentalAudio.play();
-    vocalsAudio.play();
+    togglePlayPause();
 });
   
 // Add event listener for 'pause' event of the video player
 videoPlayer.addEventListener('pause', function() {
-    instrumentalAudio.pause();
-    vocalsAudio.pause();
+    togglePlayPause();
 });
 
 
@@ -201,3 +185,12 @@ function updateStartEndTime() {
 
 // Add event listener for time update event of the video player
 videoPlayer.addEventListener('timeupdate', updateStartEndTime);
+
+videoPlayer.addEventListener('timeupdate', function() {
+    if (!isSeeking) {
+        const normalizedValue = videoPlayer.currentTime / videoPlayer.duration;
+        instrumentalAudio.seekTo(normalizedValue);
+        vocalsAudio.seekTo(normalizedValue);
+    } 
+    updateStartEndTime();
+});
