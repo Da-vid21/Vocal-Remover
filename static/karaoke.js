@@ -21,6 +21,8 @@ videoPlayer.addEventListener('loadedmetadata', function() {
     maxDuration = videoPlayer.duration;
     timeSlider.max = maxDuration;
 });
+ 
+ 
 
 const instrumentalAudio = WaveSurfer.create({
     container: "#waveform",
@@ -40,6 +42,12 @@ const vocalsAudio = WaveSurfer.create({
 instrumentalAudio.load(instrumentLink);
 vocalsAudio.load(vocalsLink);
 
+
+// Rest of your code...
+
+
+
+
 const playButton = document.getElementById('play-button');
 const pauseButton = document.getElementById('pause-button');
 const instrumentVolumeSlider = document.getElementById('instrumental-volume-slider');
@@ -48,7 +56,10 @@ const timeSlider = document.getElementById('time-slider');
 const fileInput = document.getElementById('file-input');
 const startTimeElement = document.getElementById('start-time');
 const endTimeElement = document.getElementById('end-time');
+
+
 const playPauseButton = document.getElementById('play-pause-button');
+
 
 function togglePlayPause() {
   if (isPlaying) {
@@ -95,8 +106,6 @@ timeSlider.addEventListener('input', function() {
         vocalsAudio.seekTo(normalizedValue);
         var seekTime = (normalizedValue*videoPlayer.duration);
         videoPlayer.currentTime = seekTime;
-        console.log("actual time" + videoPlayer.currentTime);
-        console.log("Desired time" + seekTime);
     }
 });
 
@@ -122,7 +131,10 @@ document.body.onkeyup = function(e) {
         isPlaying = true;
       }
     }
-} 
+}
+
+
+        
 
 instrumentalAudio.on('ready', function() {
     
@@ -158,12 +170,20 @@ vocalsAudio.on('audioprocess', function() {
 
 // Add event listener for 'play' event of the video player
 videoPlayer.addEventListener('play', function() {
-    togglePlayPause();
+    instrumentalAudio.play();
+    vocalsAudio.play();
+    isPlaying = true;
+    playIcon.style.display = 'none';
+    pauseIcon.style.display = 'inline';
 });
   
 // Add event listener for 'pause' event of the video player
 videoPlayer.addEventListener('pause', function() {
-    togglePlayPause();
+    instrumentalAudio.pause();
+    vocalsAudio.pause();
+    isPlaying = false;
+    playIcon.style.display = 'inline';
+    pauseIcon.style.display = 'none';
 });
 
 
@@ -186,11 +206,17 @@ function updateStartEndTime() {
 // Add event listener for time update event of the video player
 videoPlayer.addEventListener('timeupdate', updateStartEndTime);
 
+let lastTimeUpdate = 0;
+
 videoPlayer.addEventListener('timeupdate', function() {
     if (!isSeeking) {
-        const normalizedValue = videoPlayer.currentTime / videoPlayer.duration;
-        instrumentalAudio.seekTo(normalizedValue);
-        vocalsAudio.seekTo(normalizedValue);
-    } 
+        const currentTime = videoPlayer.currentTime;
+        if(Math.abs(currentTime - lastTimeUpdate) > 0.5) {
+            const normalizedValue = currentTime / videoPlayer.duration;
+            instrumentalAudio.seekTo(normalizedValue);
+            vocalsAudio.seekTo(normalizedValue);
+        }
+        lastTimeUpdate = currentTime;
+    }
     updateStartEndTime();
 });

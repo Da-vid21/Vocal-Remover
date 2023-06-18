@@ -77,7 +77,15 @@ def extractAudio(vid_path, vid_name):
         audio = video.audio
         # Write the audio to the output file
         audio.write_audiofile(audioName)
-    
+    accompainmentName =f"{vid_name}_accompaniment.mp3"
+    vocalsName = f"{vid_name}_vocals.mp3"
+    if(os.path.exists(f"splitted/{vid_name}/{accompainmentName}") and os.path.exists(f"splitted/{vid_name}/{vocalsName}")):
+        returnFiles = []
+        returnFiles.append(f"uploads/{vid_name}.mp4")
+        returnFiles.append(f"splitted/{vid_name}/{accompainmentName}")
+        returnFiles.append(f"splitted/{vid_name}/{vocalsName}")
+        print(returnFiles)
+        return returnFiles
     returnFiles = splitMusic(vid_name)
     print(returnFiles)
     return returnFiles
