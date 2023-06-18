@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, send_file, make_response
 import os
-from src import main, removeVocals
+from src import main
 
 app = Flask(__name__)
 
@@ -60,4 +60,4 @@ def download_video(filename):
     file_path = os.path.join('uploads', filename)
     return send_file(file_path, as_attachment=False)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
