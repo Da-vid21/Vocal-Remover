@@ -67,8 +67,8 @@ function transform(x, y) {
 
 // Validate Field
 function validate() {
-    // Make Sure Pattern Matches If There Is One
-    if (!inputField.value.match(".com")) {
+    // Make Sure Pattern Matches If There Is One 
+    if (!inputField.value.match("youtube.com") && (!inputField.value.match("youtu.be"))) {
         inputFail();
     } else {
         inputPass();
