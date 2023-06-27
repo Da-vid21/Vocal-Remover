@@ -1,5 +1,5 @@
-flask
-spleeter
-werkzeug
-pytube
+flask==2.0.0
+pytube==15.0.0
 moviepy
+spleeter==2.4.0
+werkzeug

@@ -55,7 +55,7 @@ def download_video(link):
 
 
     if (not(os.path.exists(f"{SAVE_PATH}/filename"))):
-        stream = yt.streams.get_by_itag(22)
+        stream = yt.streams.get_highest_resolution()
         stream.download(SAVE_PATH, filename)
         #print(f"\n{SAVE_PATH}/{filename}")
 
