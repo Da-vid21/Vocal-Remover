@@ -68,7 +68,7 @@ function transform(x, y) {
 // Validate Field
 function validate() {
     // Make Sure Pattern Matches If There Is One 
-    if (!inputField.value.match("youtube.com") && (!inputField.value.match("youtu.be"))) {
+    if ((!inputField.value.match("youtube.com")) && (!inputField.value.match("youtu.be")) || inputField.value.match("&list")) {
         inputFail();
     } else {
         inputPass();
@@ -100,8 +100,6 @@ function inputPass() {
     hideQuestion();
     formBox.className = 'close';
     progress.style.width = '100%';
-
-    // Form Complete
     formComplete();
 }
 

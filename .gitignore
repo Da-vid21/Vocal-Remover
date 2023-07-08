@@ -4,4 +4,5 @@ uploads/*
 splitted/*
 src/__pycache__/
 static/__pycache__/
+__pycache__/*
 src/pretrained_models/

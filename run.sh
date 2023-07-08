@@ -1,2 +1,3 @@
 # sudo systemctl restart nginx
-gunicorn app:app -t 300 --access-logfile ../access.log --error-logfile ../error.log
+#source venv/bin/activate
+gunicorn app:app -t 600 --access-logfile ../access.log --error-logfile ../error.log

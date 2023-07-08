@@ -1,6 +1,8 @@
 # importing the module
+import youtube_dl
 from pytube import YouTube
 from moviepy.editor import *
+from spleeter.separator import Separator
 import os
 import subprocess
 
@@ -20,48 +22,47 @@ def splitMusic(filename):
     except:
         pass
 
-    # cmd = f'python3 -m spleeter separate -p spleeter:2stems -o splitted/{musicName} -f "{musicName}_{{instrument}}.mp3" {filename}'
-    # cmd = f'python3 -m spleeter separate -p spleeter:2stems -o uploads/{musicName} -f "{musicName}_{{instrument}}.mp3" {filename}'
-    cmd = f'python3 -m spleeter separate -p spleeter:2stems -o splitted/{musicName} -f "{musicName}_{{instrument}}.mp3" uploads/{musicName}.mp3 '
+    #cmd = f'python3 -m spleeter separate -p spleeter:2stems -o splitted/{musicName} -f "{musicName}_{{instrument}}.mp3" uploads/{musicName}.mp3 '
     # Run the command
-    result = subprocess.run(cmd, shell=True)
-
+    #result = subprocess.run(cmd, shell=True)
     # Check the return code to see if the command succeeded
-    if result.returncode != 0:
-        print(result)
-    # If command executed succesfully
-    else:
-        returnFiles = []
-        returnFiles.append(f"uploads/{fileName}.mp4")
-        returnFiles.append(f"splitted/{fileName}/{musicName}_accompaniment.mp3")
-        returnFiles.append(f"splitted/{fileName}/{musicName}_vocals.mp3")
-        return returnFiles
+    # if result.returncode != 0:
+    #     print(result)
+
+    separator = Separator('spleeter:2stems')
+    separator.separate_to_file(f'uploads/{musicName}.mp3', f"splitted/{fileName}", filename_format=f'{musicName}_{{instrument}}.mp3', synchronous=True)
+
+    returnFiles = []
+    returnFiles.append(f"uploads/{fileName}.mp4")
+    returnFiles.append(f"splitted/{fileName}/{musicName}_accompaniment.mp3")
+    returnFiles.append(f"splitted/{fileName}/{musicName}_vocals.mp3")
+    return returnFiles
 
 
-def download_video(link):
+def download_video(video_url):
+    
     # where to save
     SAVE_PATH = "uploads"
+    yt = YouTube(video_url)
+    name = yt.title
 
-    yt = YouTube(link)
     # creating a list for the characters to be replaced
     unwantedCharacters = ["\"", "(", ")", "|"]    
-
-    name = yt.title
     name = name.replace(" ", "_")
     for char in unwantedCharacters:
     # replace() "returns" an altered string
         name = name.replace(char, "")
-    filename = f"{name}.mp4"
+    filename = f'{name}.mp4'
 
-
-    if (not(os.path.exists(f"{SAVE_PATH}/filename"))):
-        stream = yt.streams.get_highest_resolution()
+    stream = yt.streams.get_highest_resolution()
+    try:
         stream.download(SAVE_PATH, filename)
-        #print(f"\n{SAVE_PATH}/{filename}")
+    except:
+        return ""
 
     return SAVE_PATH, name
     
-
+#vid_name doesn't expect file extensions like vid_name.mp4 only pass in vid_name
 def extractAudio(vid_path, vid_name):
     returnFiles = []
 
@@ -77,15 +78,7 @@ def extractAudio(vid_path, vid_name):
         audio = video.audio
         # Write the audio to the output file
         audio.write_audiofile(audioName)
-    accompainmentName =f"{vid_name}_accompaniment.mp3"
-    vocalsName = f"{vid_name}_vocals.mp3"
-    if(os.path.exists(f"splitted/{vid_name}/{accompainmentName}") and os.path.exists(f"splitted/{vid_name}/{vocalsName}")):
-        returnFiles = []
-        returnFiles.append(f"uploads/{vid_name}.mp4")
-        returnFiles.append(f"splitted/{vid_name}/{accompainmentName}")
-        returnFiles.append(f"splitted/{vid_name}/{vocalsName}")
-        print(returnFiles)
-        return returnFiles
+    
     returnFiles = splitMusic(vid_name)
     print(returnFiles)
     return returnFiles
@@ -98,4 +91,4 @@ def main(link):
     return returnFiles
 
 if __name__ == "__main__":
-    main("https://www.youtube.com/watch?v=tEboiVqOWJw&list=RDtEboiVqOWJw")
+    main("https://www.youtube.com/watch?v=tEboiVqOWJw")
