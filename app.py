@@ -32,4 +32,4 @@ def download_video(filename):
     file_path = os.path.join('uploads', filename)
     return send_file(file_path, as_attachment=False)
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=False, port=8000, threaded=True, request_timeout=600)

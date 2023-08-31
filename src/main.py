@@ -1,10 +1,11 @@
 # importing the module
-import youtube_dl
 from pytube import YouTube
 from moviepy.editor import *
 from spleeter.separator import Separator
 import os
-import subprocess
+
+# where to save
+SAVE_PATH = "uploads"
 
 def splitMusic(filename):
     filePath = filename.split("/")
@@ -41,8 +42,6 @@ def splitMusic(filename):
 
 def download_video(video_url):
     
-    # where to save
-    SAVE_PATH = "uploads"
     yt = YouTube(video_url)
     name = yt.title
 
@@ -62,23 +61,21 @@ def download_video(video_url):
 
     return SAVE_PATH, name
     
-#vid_name doesn't expect file extensions like vid_name.mp4 only pass in vid_name
-def extractAudio(vid_path, vid_name):
+def extractAudio(vid_link, vid_path, vid_name):
     returnFiles = []
 
-    videoName = f"{vid_path}/{vid_name}.mp4"
-    # Specify the output file name
+    # The output file name
     audioName = f"{vid_path}/{vid_name}.mp3"
 
-    # Load the video file
-    video = VideoFileClip(videoName)
-
-    if(not(os.path.exists(f"{vid_path}/{vid_name}.mp3"))):
-        # Extract the audio
-        audio = video.audio
-        # Write the audio to the output file
-        audio.write_audiofile(audioName)
-    
+    # Check if the audio file already exists
+    if not os.path.exists(audioName): 
+        yt = YouTube(vid_link)
+        name = yt.title
+        stream = yt.streams.filter(only_audio=True).first()
+        try:
+            stream.download(SAVE_PATH, f'{vid_name}.mp3')
+        except:
+            return ""
     returnFiles = splitMusic(vid_name)
     print(returnFiles)
     return returnFiles
@@ -87,7 +84,7 @@ def extractAudio(vid_path, vid_name):
 def main(link):
 
     SAVE_PATH, name = download_video(link)
-    returnFiles = extractAudio(SAVE_PATH, name)
+    returnFiles = extractAudio(link, SAVE_PATH, name)
     return returnFiles
 
 if __name__ == "__main__":
